@@ -8,6 +8,7 @@ while true; do
     free -h >> "$LOG_FILE"
     df -h >> "$LOG_FILE"
     uptime >> "$LOG_FILE"
+    echo >> "$LOG_FILE"
 
     sleep "$DELAY"
 done
