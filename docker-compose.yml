@@ -1,0 +1,31 @@
+services:
+    monitor:
+        build:
+            context: ./services/monitor
+            dockerfile: Dockerfile
+        container_name: monitor
+        command: ./script.sh
+        volumes:
+            - script-data:/app/data
+        networks:
+            - default
+    http-server:
+        build:
+            context: ./services/http-server
+            dockerfile: Dockerfile
+        container_name: http-server
+        environment:
+            - FILES_PATH=/monitor-app/data
+        command: uvicorn main:app --host 0.0.0.0 --port 8080
+        ports:
+            - "8080:8080"
+        volumes:
+            - script-data:/monitor-app/data
+        networks:
+            - default
+
+volumes:
+    script-data:
+
+networks:
+    default:
